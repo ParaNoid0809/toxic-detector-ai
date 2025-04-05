@@ -5,7 +5,7 @@ python-multipart
 pillow
 transformers
 torch
-tensorflow
+tensorflow-cpu
 keras
 opencv-python
 scikit-learn
