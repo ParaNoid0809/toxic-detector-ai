@@ -1,8 +1,14 @@
 fastapi
 uvicorn
+pydantic
 python-multipart
+pillow
 transformers
 torch
-nsfw-detector
-pillow
+tensorflow
+keras
+opencv-python
+scikit-learn
 numpy
+requests
+python-dotenv
