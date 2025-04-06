@@ -5,7 +5,7 @@ from app.model_text import get_text_toxic_classifier
 app = FastAPI()
 
 @app.get("/")
-def home():
+def read_root():
     return {"message": "Toxicity Detection API is running."}
 
 @app.post("/predict-text")
