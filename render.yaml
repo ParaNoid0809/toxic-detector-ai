@@ -2,10 +2,11 @@ services:
   - type: web
     name: toxic-detector-ai
     env: python
-    region: oregon
+    region: oregon  # or frankfurt if you're in EU
     plan: free
-    runtime: python
-    buildCommand: "pip install -r requirements.txt"
-    startCommand: "uvicorn app.main:app --host 0.0.0.0 --port 10000"
-    autoDeploy: true
-    branch: main
+    branch: main  # or your default branch
+    buildCommand: pip install -r requirements.txt
+    startCommand: ./start.sh
+    envVars:
+      - key: PYTHON_VERSION
+        value: 3.10.13
