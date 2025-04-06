@@ -1,19 +1,15 @@
-# app/main.py
-from fastapi import FastAPI, Request
-from transformers import pipeline
+from fastapi import FastAPI
+from app.schemas import TextInput
+from app.model_text import get_text_toxic_classifier
 
 app = FastAPI()
-classifier = None  # Lazy loading
 
 @app.get("/")
-def read_root():
-    return {"message": "API is live"}
+def home():
+    return {"message": "Toxicity Detection API is running."}
 
-@app.post("/analyze")
-async def analyze(request: Request):
-    global classifier
-    if classifier is None:
-        classifier = pipeline("text-classification", model="distilbert-base-uncased")
-    data = await request.json()
-    result = classifier(data["text"])
-    return {"result": result}
+@app.post("/predict-text")
+def predict_text(input: TextInput):
+    classifier = get_text_toxic_classifier()
+    result = classifier(input.text)
+    return {"results": result}
