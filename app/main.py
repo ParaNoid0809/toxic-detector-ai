@@ -1,15 +1,19 @@
-from fastapi import FastAPI
-from app.schemas import TextInput
-from app.model_text import get_text_toxic_classifier
+from fastapi import FastAPI, UploadFile, File
+from app.model_text import analyze_text
+from app.model_image import analyze_image
+from app.schemas import TextInput, TextResult
 
 app = FastAPI()
 
 @app.get("/")
 def read_root():
-    return {"message": "Toxicity Detection API is running."}
+    return {"message": "Welcome to the AI Toxicity Detection API"}
 
-@app.post("/predict-text")
-def predict_text(input: TextInput):
-    classifier = get_text_toxic_classifier()
-    result = classifier(input.text)
-    return {"results": result}
+@app.post("/analyze/text", response_model=TextResult)
+async def analyze_text_route(payload: TextInput):
+    return analyze_text(payload.text)
+
+@app.post("/analyze/image")
+async def analyze_image_route(file: UploadFile = File(...)):
+    contents = await file.read()
+    return analyze_image(contents)
