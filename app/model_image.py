@@ -1,13 +1,14 @@
 from PIL import Image
 import numpy as np
+import cv2
 import io
 
 def analyze_image(content: bytes):
-    # Load image
+    # Example dummy implementation (replace with real model logic)
     image = Image.open(io.BytesIO(content)).convert("RGB")
     np_image = np.array(image)
 
-    # Simulate NSFW detection
+    # Placeholder: simulate detection
     nsfw_score = 0.92
     category = "porn"
 
