@@ -13,3 +13,4 @@ numpy==1.23.5
 requests
 python-dotenv
 nsfw-detector
+protobuf==3.20.*
