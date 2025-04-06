@@ -1,14 +1,4 @@
 fastapi
 uvicorn
-pydantic
-python-multipart
-pillow
 transformers
 torch
-tensorflow-cpu
-keras
-opencv-python
-scikit-learn
-numpy
-requests
-python-dotenv
