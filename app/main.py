@@ -1,19 +1,19 @@
-from fastapi import FastAPI, UploadFile, File
-from app.model_text import analyze_text
-from app.model_image import analyze_image
-from app.schemas import TextInput, TextResult
+# app/main.py
+from fastapi import FastAPI, Request
+from transformers import pipeline
 
 app = FastAPI()
+classifier = None  # Lazy loading
 
 @app.get("/")
 def read_root():
-    return {"message": "Welcome to the AI Toxicity Detection API"}
+    return {"message": "API is live"}
 
-@app.post("/analyze/text", response_model=TextResult)
-async def analyze_text_route(payload: TextInput):
-    return analyze_text(payload.text)
-
-@app.post("/analyze/image")
-async def analyze_image_route(file: UploadFile = File(...)):
-    contents = await file.read()
-    return analyze_image(contents)
+@app.post("/analyze")
+async def analyze(request: Request):
+    global classifier
+    if classifier is None:
+        classifier = pipeline("text-classification", model="distilbert-base-uncased")
+    data = await request.json()
+    result = classifier(data["text"])
+    return {"result": result}
